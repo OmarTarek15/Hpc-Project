@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include "mpi.h"
 
 int main(int argc, char *argv[])
@@ -9,6 +10,8 @@ int main(int argc, char *argv[])
     int noOfProc;
     int n;
     double mean;
+
+    clock_t duration = clock();
 
     MPI_Status status;
     MPI_Init(&argc, &argv);
@@ -88,6 +91,9 @@ int main(int argc, char *argv[])
         double stand_dev = sqrt(variance);
 
         printf("Mean = %lf, Variance = %lf, Standard deviation = %lf\n", mean, variance, stand_dev);
+        
+        duration = clock() - duration;
+        printf("Time taken to execute in seconds: %0.2f\n", (double)duration / CLOCKS_PER_SEC);
     }
     else
     {
